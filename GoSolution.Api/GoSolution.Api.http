@@ -1,0 +1,6 @@
+@GoSolution.Api_HostAddress = http://localhost:5029
+
+GET {{GoSolution.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
