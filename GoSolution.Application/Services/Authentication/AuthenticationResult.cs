@@ -1,10 +1,9 @@
+using GoSolution.Domain.Entities;
+
 namespace GoSolution.Application.Services.Authentication;
 
 public record AuthenticationResult
 (
-    Guid Id,
-    string FirstName,
-    string LastName,
-    string Email,
+    Employee Employee,
     string Token
 );

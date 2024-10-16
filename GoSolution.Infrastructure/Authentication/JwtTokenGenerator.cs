@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using GoSolution.Application.Common.Interfaces.Authentication;
 using GoSolution.Application.Common.Interfaces.Services;
+using GoSolution.Domain.Entities;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
@@ -18,16 +19,16 @@ public class JwtTokenGenerator : IJwtTokenGenerator
         _dateTimeProvider = dateTimeProvider;
         _jwtSettings = jwtOptions.Value;
     }
-    public string GenerateToken(Guid userId, string firstName, string lastName)
+    public string GenerateToken(Employee employee)
     {
         var signingCredentials =
             new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Secret)),
                 SecurityAlgorithms.HmacSha256);
         var claims = new[]
         {
-            new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
-            new Claim(JwtRegisteredClaimNames.GivenName, firstName),
-            new Claim(JwtRegisteredClaimNames.FamilyName, lastName),
+            new Claim(JwtRegisteredClaimNames.Sub, employee.Id.ToString()),
+            new Claim(JwtRegisteredClaimNames.GivenName, employee.FirstName),
+            new Claim(JwtRegisteredClaimNames.FamilyName, employee.LastName),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
         var securityToken = new JwtSecurityToken(

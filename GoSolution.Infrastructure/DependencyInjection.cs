@@ -1,7 +1,9 @@
 using GoSolution.Application.Common.Interfaces.Authentication;
+using GoSolution.Application.Common.Interfaces.Persistence;
 using GoSolution.Application.Common.Interfaces.Services;
 using GoSolution.Application.Services.Authentication;
 using GoSolution.Infrastructure.Authentication;
+using GoSolution.Infrastructure.Persistence;
 using GoSolution.Infrastructure.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,6 +17,8 @@ public static class DependencyInjection
         services.Configure<JwtSettings>(configuration.GetSection(JwtSettings.SectionName));
         services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
+
+        services.AddScoped<IEmployeeRepository, EmployeeRepository>();
         return services;
     }
 }

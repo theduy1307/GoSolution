@@ -1,3 +1,4 @@
+using GoSolution.Api.Filters;
 using GoSolution.Application.Services.Authentication;
 using GoSolution.Contracts.Authentication;
 using Microsoft.AspNetCore.Mvc;
@@ -6,6 +7,7 @@ namespace GoSolution.Api.Controllers;
 
 [ApiController]
 [Route("auth")]
+[ErrorHandlingFilter]
 public class AuthenticationController : ControllerBase
 {
     private readonly IAuthenticationService _authenticationService;
@@ -23,10 +25,10 @@ public class AuthenticationController : ControllerBase
             request.Email,
             request.Password);
         var response = new AuthenticationResponse(
-            authResult.Id,
-            authResult.FirstName,
-            authResult.LastName,
-            authResult.Email,
+            authResult.Employee.Id,
+            authResult.Employee.FirstName,
+            authResult.Employee.LastName,
+            authResult.Employee.Account?.Username ?? "",
             authResult.Token
             );
         return Ok(response);
@@ -39,10 +41,10 @@ public class AuthenticationController : ControllerBase
             request.Email,
             request.Password);
         var response = new AuthenticationResponse(
-            authResult.Id,
-            authResult.FirstName,
-            authResult.LastName,
-            authResult.Email,
+            authResult.Employee.Id,
+            authResult.Employee.FirstName,
+            authResult.Employee.LastName,
+            authResult.Employee.Account?.Username ?? "",
             authResult.Token
         );
         return Ok(response);
